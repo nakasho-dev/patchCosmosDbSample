@@ -1,0 +1,44 @@
+{
+  "version": "2.0",
+  "functionApp": {
+    "id": "patchCosmosDbSample",
+    "name": "patchCosmosDbSample",
+    "resourceGroup": "your-resource-group",
+    "subscription": "your-subscription-id"
+  },
+  "functions": [
+    {
+      "name": "hourSettingMigration",
+      "scriptFile": "../patchCosmosDbSample-1.0-SNAPSHOT.jar",
+      "entryPoint": "org.ukky.patchcosmosdbsample.function.MigrationFunction.run",
+      "bindings": [
+        {
+          "name": "timerInfo",
+          "type": "timerTrigger",
+          "direction": "in",
+          "schedule": "0 0 2 * * *"
+        }
+      ]
+    },
+    {
+      "name": "hourSettingMigrationManual",
+      "scriptFile": "../patchCosmosDbSample-1.0-SNAPSHOT.jar",
+      "entryPoint": "org.ukky.patchcosmosdbsample.function.MigrationFunction.runManual",
+      "bindings": [
+        {
+          "name": "req",
+          "type": "httpTrigger",
+          "direction": "in",
+          "authLevel": "function",
+          "methods": ["post"]
+        },
+        {
+          "name": "$return",
+          "type": "http",
+          "direction": "out"
+        }
+      ]
+    }
+  ]
+}
+
