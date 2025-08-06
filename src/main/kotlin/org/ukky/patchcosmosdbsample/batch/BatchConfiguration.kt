@@ -81,6 +81,11 @@ class CosmosItemReader(
     private var items: Iterator<UserItem>? = null
     private var initialized = false
 
+    init {
+        // nameを設定してExecutionContextのキープレフィックスを定義
+        setName("cosmosItemReader")
+    }
+
     override fun doRead(): UserItem? {
         if (!initialized) {
             logger.info("Initializing CosmosItemReader...")

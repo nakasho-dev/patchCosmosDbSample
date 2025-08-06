@@ -60,4 +60,18 @@ class CosmosDbService(
             Mono.error(e)
         }
     }
+
+    /**
+     * ユーザーアイテムを保存する（テストデータ作成用）
+     */
+    fun saveUserItem(userItem: UserItem): Mono<UserItem> {
+        return cosmosAsyncContainer.createItem(userItem)
+            .map { response -> response.item }
+            .doOnSuccess {
+                logger.debug("Successfully saved user item: ${userItem.id}")
+            }
+            .doOnError { error ->
+                logger.error("Failed to save user item: ${userItem.id}", error)
+            }
+    }
 }
